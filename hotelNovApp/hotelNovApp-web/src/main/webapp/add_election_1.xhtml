@@ -1,0 +1,155 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <style>
+            input{
+                width: 200px;
+            }
+        </style>
+        <div class="ContainerIndent">
+            <p:breadCrumb>
+                <p:menuitem value="Home" url="#" />
+                <p:menuitem value="Paramétrage" url="#" />
+                <p:menuitem value="Tranches Horaires" url="#" />
+            </p:breadCrumb>
+            <div class="EmptyBox30"></div>
+
+
+            <h:form>
+                <div class="ContainerIndent">
+<p:messages autoUpdate="true"/>
+
+                    <p:panelGrid id="grid" style="margin-top:20px;width:50%;margin:auto">
+                        <f:facet name="header">
+                            <p:row>
+                                <p:column colspan="2">1995-96 NBA Playoffs</p:column>
+                            </p:row>
+
+
+                        </f:facet>
+
+                        <p:row>
+                            <p:column style="font-weight: bold;">Code election</p:column>
+                            <p:column>
+                                <p:inputText id="code_election" value="#{electionBean.code}" title="Code election" required="true" label="Code election"/>
+
+                            </p:column>
+
+                        </p:row>
+                        <p:row>
+                            <p:column style="font-weight: bold;">Type Election</p:column>
+                            <p:column> 
+                                <p:selectOneMenu value="#{electionBean.typeElection}" required="true" label="Type election" style="width:270px !important">  
+
+                                    <f:selectItem itemLabel="--Type election--" itemValue="" />  
+                                    <f:selectItems value="#{typeElectionBean.listTypeElection}" var="tag"  itemLabel="#{tag.libelle}" itemValue="#{tag.id}"/>  
+
+                                </p:selectOneMenu>
+                            </p:column>
+
+                        </p:row>
+                        <p:row>
+                            <p:column style="font-weight: bold;">Libellé</p:column>
+                            <p:column> 
+                                <p:inputText id="libelle" value="#{electionBean.libelle}" title="Libellé" required="true" label="Libellé"/>
+                            </p:column>
+
+
+                        </p:row>
+
+                        <p:row>
+                            <p:column style="font-weight: bold;">Nombre de candidats</p:column>
+                            <p:column> 
+                                <p:inputText id="nbCandidat" value="#{electionBean.nbreDeCandidat}" title="Nombre candidat" required="true" label="Nombre candidat"/>
+                            </p:column>
+
+
+                        </p:row>
+
+                        <p:row>
+                            <p:column style="font-weight: bold;">Date</p:column>
+                            <p:column> 
+                                <p:calendar id="button" value="#{electionBean.dateElection}" showOn="button"  title="Date" required="true" label="Date" />                   
+                            </p:column>
+
+
+                        </p:row>
+
+                        <p:row>
+                            <p:column style="font-weight: bold;">Ouverture</p:column>
+                            <p:column> 
+
+                                <p:calendar id="timeOuv" value="#{electionBean.ouvertureElection}" pattern="HH:mm" timeOnly="true"  title="Ouverture" required="true" label="Ouverture" />
+<!--                                <p:inputText id="ouverture" value="#{trancheHoraireBean.trancheHoraire}" title="Tranche horaire" required="true" label="Tranche horaire"/>-->
+                            </p:column>
+
+
+                        </p:row>
+                        <p:row>
+                            <p:column style="font-weight: bold;">Fermeture</p:column>
+                            <p:column> 
+                                <p:calendar id="timeFerm" value="#{electionBean.fermetureElection}" pattern="HH:mm" timeOnly="true" title="Fermeture" required="true" label="Fermeture"  />
+
+<!--                                <p:inputText id="fermeture" value="#{trancheHoraireBean.trancheHoraire}" title="Tranche horaire" required="true" label="Tranche horaire"/>-->
+                            </p:column>
+
+
+                        </p:row>
+
+                        <p:row>
+                            <p:column style="font-weight: bold;">Participation</p:column>
+                            <p:column> 
+                                <p:selectOneMenu value="#{electionBean.frequenceParticipation}"  title="Frequence participation" required="true" label="Frequence participation" style="width:270px !important">  
+
+                                    <f:selectItem itemLabel="--Choisir une fréquence--" itemValue="" /> 
+                                    <f:selectItems value="#{frequenceBean.listFrequence}" var="tag"  itemLabel="#{tag.frequence} min" itemValue="#{tag.id}"/>  
+
+
+                                    <f:selectItems  itemLabel="" itemValue=""/>  
+
+                                </p:selectOneMenu>                            </p:column>
+
+
+                        </p:row>
+                        <p:row>
+                            <p:column style="font-weight: bold;">Commentaire</p:column>
+                            <p:column> 
+                                <p:inputTextarea rows="5" cols="50" value="#{electionBean.commentaire}" counter="display" maxlength="255" counterTemplate="{0} charactère restant." autoResize="false"  />
+                                <div style="display:block"></div>
+                                <h:outputText id="display" />                                
+                            </p:column>
+
+
+                        </p:row>
+
+
+
+                        <f:facet name="footer">
+                            <p:row>
+                                <p:column colspan="2" style="text-align:center">
+                                    <p:commandButton value="Ajouter Election" update="grid" icon="ui-icon-check" validateClient="true" style="margin:auto" action="#{electionBean.creerElection}"/>
+                                </p:column>
+                            </p:row>
+
+
+                        </f:facet>
+
+
+                    </p:panelGrid>
+
+                    <div class="EmptyBox30"></div>
+
+
+
+                </div>
+            </h:form>
+
+        </div>
+    </ui:define>
+
+</ui:composition>

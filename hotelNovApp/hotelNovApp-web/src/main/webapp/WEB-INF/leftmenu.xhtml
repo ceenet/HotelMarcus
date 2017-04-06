@@ -1,0 +1,40 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ps="http://primefaces.org/sentinel"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <div id="layout-menubar" class="Unselectable fontRegular">
+        <div class="layout-menubarinner-box" id="buttonArea">
+            <a href="#" id="layout-menubar-resize" class="BordRad3" title="Menu Resize"><i class="icon-th-list-2"></i></a>
+            <a href="#" id="layout-menubar-resize2" class="BordRad3" title="Open Menu"><i class="icon-menu"></i></a>
+        </div>
+
+        <div class="layout-menubarinner-box" id="searchArea">
+            <i class="icon-search floatLeft gray"></i>
+            <input type="text" class="layout-menubar-search floatLeft Animated05" placeholder="Search Here"/>
+        </div>
+
+        <h:form id="menuform">
+            <ps:menu id="sm_leftmenu">
+                <p:menuitem id="sm_dashboard" value="Dashboard" icon="icon-home-outline" outcome="dashboard" containerStyleClass="layout-menubar-active"/>
+                
+                
+                 <p:submenu id="sm_config" label="Configuration" icon=" icon-cog" >
+                    
+                    <p:menuitem id="sm_elec_encours" value="Election(s) en cours" icon="icon-cog" outcome="election" />
+                    
+                </p:submenu>
+                <p:submenu id="sm_param" label="Paramétrage" icon="icon-wrench-1" >
+                    
+                    <p:menuitem id="sm_type_elect" value="Type election" icon="icon-cube" outcome="type_election" />
+                    <p:menuitem id="sm_hier" value="Hierachie" icon="icon-cube" outcome="hierachies" />
+                    <p:menuitem id="sm_tranch" value="Tranches horaires" icon="icon-cube" outcome="tranches_horaires" />
+                </p:submenu>
+            </ps:menu>
+        </h:form>
+    </div>
+
+</ui:composition>

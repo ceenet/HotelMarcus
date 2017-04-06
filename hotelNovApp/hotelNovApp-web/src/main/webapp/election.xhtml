@@ -1,0 +1,175 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+
+
+
+    <ui:define name="head">
+        <script type="text/javascript">
+            function skinChart() {
+                this.cfg.shadow = false;
+                this.cfg.seriesColors = ['#dae8ef', '#27aae1'];
+                this.cfg.grid = {
+                    background: '#f3f5f7',
+                    borderColor: '#e5ebf0',
+                    gridLineColor: '#e5ebf0',
+                    shadow: false
+                };
+                this.cfg.axesDefaults = {
+                    rendererOptions: {
+                        textColor: '#9fadb5'
+                    }
+                };
+                this.cfg.seriesDefaults = {
+                    shadow: false,
+                    markerOptions: {
+                        shadow: false
+                    }
+                }
+            }
+
+            function skinPie() {
+                this.cfg.seriesColors = ['#dae8ef', '#27aae1', '#33ccff', '#9fadb5'];
+                this.cfg.grid = {
+                    background: '#ffffff',
+                    borderColor: '#eaeaea',
+                    gridLineColor: '#e5ebf0',
+                    shadow: false,
+                    borderWidth: 0
+                };
+                this.cfg.seriesDefaults.shadow = false;
+            }
+        </script>
+        <style type="text/css">
+            .jqplot-target, .jqplot-axis {
+                color: #9fadb5;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <p:breadCrumb>
+                    <p:menuitem value="Home" url="#" />
+                    <p:menuitem value="Configuration" url="#" />
+                    <p:menuitem value="Elections en cours" url="#" />
+                </p:breadCrumb>
+                <div class="EmptyBox20"></div>
+
+                <f:view>
+                    <div>
+                        <div>
+                            <h:panelGrid columns="1" cellpadding="5">
+
+
+                                <!--                                <p:commandButton value="Ajouter" type="button" onclick="PF('dlg2').show();"/>-->
+
+                                <p:button outcome="add_election" value="Ajouter" />
+                            </h:panelGrid>
+                        </div>
+
+                    </div>
+                    <h:form id="form">
+                        <p:dataTable var="item" value="#{electionBean.listElections}" id="grid" paginator="true"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15">
+
+                            <p:column headerText="Code">
+                                
+                                    <p:link outcome="elections_en_cours" style="background-color:#1578c9; text-decoration:none; color:white !important;min-width: 150px;padding: 5px ">
+                                        <h:outputText value="#{item.codeElection}" />
+                                        <f:param name="electionId" value="#{item.id}" />
+                                    </p:link>
+                               
+                            </p:column>
+                            <p:column headerText="Description">
+                                <h:outputText value="#{item.libelleElection}" />
+                            </p:column>
+                            <p:column headerText="Type election">
+                                <h:outputText value="#{item.typeElection}" />
+                            </p:column>
+                            <p:column headerText="Date">
+                                <h:outputText value="#{item.dateElection}" />
+                            </p:column>
+                            <p:column headerText="Heure ouverture">
+                                <h:outputText value="#{item.heureouverture}" />
+                            </p:column>
+                            <p:column headerText="Heure fermé">
+                                <h:outputText value="#{item.heurefermetture}" />
+                            </p:column>
+                            <p:column headerText="Nombre candidat">
+                                <h:outputText value="#{item.nbcandidat}" />
+                            </p:column>
+                            <p:column headerText="Commentaire">
+                                <h:outputText value="#{item.commentaire}" />
+                            </p:column>
+
+                            <p:column headerText="Statut">
+                                <h:outputText value="#{item.clotureElection}" />
+                            </p:column>
+
+                            <p:column style="width:32px">
+
+                                <p:commandButton  type="button" onclick="PF('dlg3').show();" icon="ui-icon fa fa-edit" style="color:white" title="update"/>
+
+                            </p:column>
+
+
+                        </p:dataTable>
+                    </h:form>
+                    <p:dialog header="Ajout " widgetVar="dlg2" modal="true" height="auto" >
+
+
+                        <f:view>
+                            <h:form>
+
+                                <p:messages autoUpdate="true"/>
+
+                                <h:panelGrid id="grid" columns="2" cellpadding="5">
+
+
+
+                                    <h:outputLabel value="Code:" for="description" />
+                                    <p:inputText id="code" value="#{typeElectionBean.code}" title="Code" required="true" label="Libellé"/>
+
+
+                                    <h:outputLabel value="Description:" for="description" />
+                                    <p:inputText id="description" value="#{typeElectionBean.description}" title="Description" required="true" label="Libellé"/>
+
+                                    <h:outputLabel value="Hierachie:"  />
+                                    <p:selectOneMenu value="#{typeElectionBean.hierachieParent}"  label="Menu parent" style="width:270px !important">  
+
+                                        <f:selectItem itemLabel="--Hierachie--" itemValue="" />  
+                                        <f:selectItems value="#{hierachieBean.listHierachie}" var="tag"  itemLabel="#{tag.description}" itemValue="#{tag.id}"/>  
+
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+
+                                <p:commandButton value="Valider" update="grid" icon="ui-icon-check" validateClient="true" style="margin-right:10px" action="#{typeElectionBean.creerTypeElection}"/>
+
+                            </h:form>
+
+                        </f:view>
+
+                    </p:dialog>   
+                    <!--Modification-->
+
+                </f:view>
+
+
+                <div class="EmptyBox10"></div>
+            </div>
+        </div>
+
+
+
+    </ui:define>
+
+
+
+</ui:composition>
